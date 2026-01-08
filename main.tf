@@ -30,7 +30,7 @@ resource "aws_key_pair" "terraform_key" {
   public_key = tls_private_key.ec2_key.public_key_openssh
 }
 
-# Create EC2 instance
+# Creating EC2 instance
 resource "aws_instance" "demo_ec2" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
