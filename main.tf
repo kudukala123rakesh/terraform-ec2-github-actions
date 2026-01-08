@@ -2,6 +2,22 @@ provider "aws" {
   region = "us-east-1"
 }
 
+# Fetch latest Amazon Linux 2 AMI
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
 # Generate SSH key dynamically
 resource "tls_private_key" "ec2_key" {
   algorithm = "RSA"
@@ -21,7 +37,6 @@ resource "aws_instance" "demo_ec2" {
   key_name      = aws_key_pair.terraform_key.key_name
 
   tags = {
-    Name = "terraform-demo-ec2"
+    Name = "terraform-github-actions-ec2"
   }
 }
-
