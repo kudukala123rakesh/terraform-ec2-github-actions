@@ -24,9 +24,8 @@ resource "tls_private_key" "ec2_key" {
   rsa_bits  = 4096
 }
 
-# Create AWS key pair
 resource "aws_key_pair" "terraform_key" {
-  key_name   = "terraform-github-actions-key"
+  key_name   = "terraform-github-actions-${timestamp()}"
   public_key = tls_private_key.ec2_key.public_key_openssh
 }
 
