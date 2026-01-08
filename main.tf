@@ -16,11 +16,12 @@ resource "aws_key_pair" "terraform_key" {
 
 # Create EC2 instance
 resource "aws_instance" "demo_ec2" {
-  ami           = "ami-0d8f6eb4f641ef691" # Amazon Linux 2 (eu-north-1)
+  ami           = data.aws_ami.amazon_linux.id
   instance_type = "t3.micro"
   key_name      = aws_key_pair.terraform_key.key_name
 
   tags = {
-    Name = "terraform-github-actions-ec2"
+    Name = "terraform-demo-ec2"
   }
 }
+
